@@ -1,0 +1,119 @@
+openapi: 3.0.3
+
+info:
+  title: Belajar REST API
+  version: '1.0'
+
+servers:
+  - url: http://localhost:3000
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+paths:
+  /users:
+    get:
+      description: 'Mendapatkan data semua user'
+      parameters: []
+      responses:
+        '200':
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Tidak diizinkan
+        '500':
+          description: Server gagal
+
+  /users/{id}:
+    get:
+      description: 'Mendapatkan data user berdasarkan ID'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: Tidak diizinkan
+        '500':
+          description: Server gagal
+
+    delete:
+      description: 'Menghapus data user berdasarkan ID'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Berhasil
+        '403':
+          description: Tidak diizinkan
+        '500':
+          description: Server gagal
+
+    put:
+      description: 'Mengubah data user berdasarkan ID'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: age
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: Tidak diizinkan
+        '500':
+          description: Server gagal

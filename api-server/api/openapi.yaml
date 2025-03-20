@@ -1,0 +1,139 @@
+openapi: 3.0.3
+info:
+  title: Belajar REST API
+  version: "1.0"
+servers:
+- url: http://localhost:3000
+paths:
+  /users:
+    get:
+      description: Mendapatkan data semua user
+      operationId: usersGET
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                type: array
+          description: Berhasil
+        "403":
+          description: Tidak diizinkan
+        "500":
+          description: Server gagal
+      x-eov-operation-handler: controllers/DefaultController
+  /users/{id}:
+    delete:
+      description: Menghapus data user berdasarkan ID
+      operationId: usersIdDELETE
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Berhasil
+        "403":
+          description: Tidak diizinkan
+        "500":
+          description: Server gagal
+      x-eov-operation-handler: controllers/DefaultController
+    get:
+      description: Mendapatkan data user berdasarkan ID
+      operationId: usersIdGET
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Berhasil
+        "403":
+          description: Tidak diizinkan
+        "500":
+          description: Server gagal
+      x-eov-operation-handler: controllers/DefaultController
+    put:
+      description: Mengubah data user berdasarkan ID
+      operationId: usersIdPUT
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: name
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: age
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Berhasil
+        "403":
+          description: Tidak diizinkan
+        "500":
+          description: Server gagal
+      x-eov-operation-handler: controllers/DefaultController
+components:
+  schemas:
+    User:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        email: email
+        age: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
